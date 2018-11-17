@@ -1,4 +1,10 @@
-﻿<h1>Hi {{currentUser.firstName}}!</h1>
+﻿<style>
+    tr {
+        max-width:200px;
+    }
+</style>
+
+<h1>Hi {{currentUser.firstName}}!</h1>
 <h3>All users :<h5>(format: username - firstName - lastName)</h5></h3>
 <ul>
     <li *ngFor="let user of users">
@@ -6,3 +12,74 @@
         - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>
     </li>
 </ul>
+
+<div class="container" style="margin-top:100px;">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1> Task List </h1>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-8">
+            <input type="text" class="form-control" name="task" placeholder="Task" #taskInput>
+        </div>
+
+        <div class="col-xs-4">
+            <button class="btn btn-info" style="margin-left:10px;" (click)="addTask(taskInput)">Add</button>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-xs-8">
+            <input type="text" class="form-control" name="filter" placeholder="Filter Keyword(s)" #filterInput>
+        </div>
+
+        <div class="col-xs-4">
+            <button class="btn btn-info" style="margin-left:10px;" (click)="addFilter(filterInput)">Filter</button>
+            <button class="btn btn-info" style="margin-left:10px;" (click)="clearFilter(filterInput)">Clear</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>To-Do list</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let task of tasks; let idx = index">
+                        <ng-container *ngIf="task.displayable">
+                            <td [innerHTML]="(idx + 1) + '. ' + task.display_title">
+                            </td>
+
+                            <td>
+                                <button class="btn btn-primary btn-xs" (click)="editTask(idx)"> Edit </button>
+                            </td>
+
+                            <td>
+                                <button class="btn btn-warning btn-xs" id="dan" (click)="cancelTask(idx);"> Cancel/Apply </button>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger btn-xs" (click)="deleteTask(idx)"> Del </button>
+                            </td>
+                        </ng-container>
+                    </tr>
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                            <button class="btn btn-danger" style="margin-top: 15px;" (click)="clearToDo()">Clear</button>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
